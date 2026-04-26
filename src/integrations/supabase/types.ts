@@ -14,16 +14,156 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      activity_logs: {
+        Row: {
+          created_at: string
+          id: string
+          log_date: string
+          sentiment: number | null
+          student_id: string
+          tech_tags: string[]
+          transcript: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          log_date?: string
+          sentiment?: number | null
+          student_id: string
+          tech_tags?: string[]
+          transcript: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          log_date?: string
+          sentiment?: number | null
+          student_id?: string
+          tech_tags?: string[]
+          transcript?: string
+        }
+        Relationships: []
+      }
+      internship_submissions: {
+        Row: {
+          actual_tech: string[]
+          company: string
+          id: string
+          jd_file_path: string | null
+          jd_text: string | null
+          required_tech: string[]
+          role_title: string
+          student_id: string
+          submitted_at: string
+          work_summary: string
+        }
+        Insert: {
+          actual_tech?: string[]
+          company: string
+          id?: string
+          jd_file_path?: string | null
+          jd_text?: string | null
+          required_tech?: string[]
+          role_title: string
+          student_id: string
+          submitted_at?: string
+          work_summary: string
+        }
+        Update: {
+          actual_tech?: string[]
+          company?: string
+          id?: string
+          jd_file_path?: string | null
+          jd_text?: string | null
+          required_tech?: string[]
+          role_title?: string
+          student_id?: string
+          submitted_at?: string
+          work_summary?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string | null
+          full_name: string | null
+          id: string
+          roll_no: string | null
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id: string
+          roll_no?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          roll_no?: string | null
+        }
+        Relationships: []
+      }
+      student_comments: {
+        Row: {
+          body: string
+          created_at: string
+          faculty_id: string
+          id: string
+          student_id: string
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          faculty_id: string
+          id?: string
+          student_id: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          faculty_id?: string
+          id?: string
+          student_id?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "student" | "faculty"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +290,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["student", "faculty"],
+    },
   },
 } as const
