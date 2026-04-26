@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, useLocation } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -9,7 +9,7 @@ import type { Tables } from "@/integrations/supabase/types";
 
 export const Route = createFileRoute("/_faculty/students")({
   head: () => ({ meta: [{ title: "Students — SkillAlign" }] }),
-  component: StudentsList,
+  component: StudentsRoute,
 });
 
 type StudentProfile = Pick<Tables<"profiles">, "id" | "full_name" | "roll_no" | "email">;
@@ -21,6 +21,14 @@ type SubmissionSummary = Pick<
 interface Row extends StudentProfile {
   company?: string;
   role_title?: string;
+}
+
+function StudentsRoute() {
+  const location = useLocation();
+
+  if (location.pathname !== "/students") return <Outlet />;
+
+  return <StudentsList />;
 }
 
 function StudentsList() {
