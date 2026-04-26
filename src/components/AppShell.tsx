@@ -5,13 +5,13 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { to: "/", label: "Dashboard", icon: LayoutDashboard, exact: true },
-  { to: "/jd-tracker", label: "JD Tracker", icon: FileText },
-  { to: "/activity", label: "Activity Feed", icon: Activity },
-  { to: "/sentiment", label: "Sentiment Analytics", icon: LineChart },
-  { to: "/alerts", label: "Alert Panel", icon: AlertTriangle },
-  { to: "/setup", label: "Collaborative Setup", icon: Settings },
-] as const;
+  { to: "/" as const, label: "Dashboard", icon: LayoutDashboard, exact: true },
+  { to: "/jd-tracker" as const, label: "JD Tracker", icon: FileText, exact: false },
+  { to: "/activity" as const, label: "Activity Feed", icon: Activity, exact: false },
+  { to: "/sentiment" as const, label: "Sentiment Analytics", icon: LineChart, exact: false },
+  { to: "/alerts" as const, label: "Alert Panel", icon: AlertTriangle, exact: false },
+  { to: "/setup" as const, label: "Collaborative Setup", icon: Settings, exact: false },
+];
 
 export function AppShell() {
   const location = useLocation();
