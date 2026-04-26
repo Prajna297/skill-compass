@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { Users, Sparkles } from "lucide-react";
 import { toast } from "sonner";
+import { getErrorMessage } from "@/lib/errors";
 
 export const Route = createFileRoute("/login/faculty")({
   head: () => ({ meta: [{ title: "Faculty Login — SkillAlign" }] }),
@@ -41,8 +42,8 @@ function FacultyLogin() {
         if (error) throw error;
       }
       navigate({ to: "/dashboard" });
-    } catch (err: any) {
-      toast.error(err.message || "Authentication failed");
+    } catch (err: unknown) {
+      toast.error(getErrorMessage(err, "Authentication failed"));
     } finally {
       setLoading(false);
     }
@@ -51,7 +52,10 @@ function FacultyLogin() {
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-6">
       <div className="w-full max-w-md">
-        <Link to="/" className="flex items-center gap-2 mb-8 text-sm text-muted-foreground hover:text-foreground">
+        <Link
+          to="/"
+          className="flex items-center gap-2 mb-8 text-sm text-muted-foreground hover:text-foreground"
+        >
           <Sparkles className="h-4 w-4" /> SkillAlign
         </Link>
         <Card className="card-elevated p-8 border-border/60">
@@ -60,8 +64,12 @@ function FacultyLogin() {
               <Users className="h-5 w-5" />
             </div>
             <div>
-              <h1 className="font-display font-semibold text-xl">Faculty {mode === "signin" ? "Sign in" : "Sign up"}</h1>
-              <p className="text-xs text-muted-foreground">Cohort dashboards, alerts and mentorship</p>
+              <h1 className="font-display font-semibold text-xl">
+                Faculty {mode === "signin" ? "Sign in" : "Sign up"}
+              </h1>
+              <p className="text-xs text-muted-foreground">
+                Cohort dashboards, alerts and mentorship
+              </p>
             </div>
           </div>
 
@@ -69,16 +77,35 @@ function FacultyLogin() {
             {mode === "signup" && (
               <div>
                 <Label htmlFor="name">Full name</Label>
-                <Input id="name" value={fullName} onChange={(e) => setFullName(e.target.value)} required maxLength={120} />
+                <Input
+                  id="name"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  required
+                  maxLength={120}
+                />
               </div>
             )}
             <div>
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+              <Input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
             </div>
             <div>
               <Label htmlFor="password">Password</Label>
-              <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={6} />
+              <Input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                minLength={6}
+              />
             </div>
             <Button type="submit" disabled={loading} className="w-full">
               {loading ? "Please wait..." : mode === "signin" ? "Sign in" : "Create account"}
@@ -87,13 +114,34 @@ function FacultyLogin() {
 
           <div className="mt-5 text-center text-sm text-muted-foreground">
             {mode === "signin" ? (
-              <>No account? <button type="button" className="text-primary hover:underline" onClick={() => setMode("signup")}>Sign up</button></>
+              <>
+                No account?{" "}
+                <button
+                  type="button"
+                  className="text-primary hover:underline"
+                  onClick={() => setMode("signup")}
+                >
+                  Sign up
+                </button>
+              </>
             ) : (
-              <>Already registered? <button type="button" className="text-primary hover:underline" onClick={() => setMode("signin")}>Sign in</button></>
+              <>
+                Already registered?{" "}
+                <button
+                  type="button"
+                  className="text-primary hover:underline"
+                  onClick={() => setMode("signin")}
+                >
+                  Sign in
+                </button>
+              </>
             )}
           </div>
           <div className="mt-3 text-center text-xs text-muted-foreground">
-            Student? <Link to="/login/student" className="text-primary hover:underline">Use the student login</Link>
+            Student?{" "}
+            <Link to="/login/student" className="text-primary hover:underline">
+              Use the student login
+            </Link>
           </div>
         </Card>
       </div>

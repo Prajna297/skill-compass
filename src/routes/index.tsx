@@ -8,7 +8,10 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "SkillAlign — Internship Monitoring" },
-      { name: "description", content: "AI-powered skill alignment and oversight for student internships." },
+      {
+        name: "description",
+        content: "AI-powered skill alignment and oversight for student internships.",
+      },
     ],
   }),
   component: Landing,
@@ -32,7 +35,9 @@ function Landing() {
         </div>
         <div>
           <div className="font-display font-bold leading-tight">SkillAlign</div>
-          <div className="text-[10px] text-muted-foreground tracking-widest uppercase">AI Monitor</div>
+          <div className="text-[10px] text-muted-foreground tracking-widest uppercase">
+            AI Monitor
+          </div>
         </div>
       </header>
 
@@ -46,7 +51,8 @@ function Landing() {
             The Future of Internship Oversight
           </h1>
           <p className="mt-5 text-muted-foreground text-lg max-w-2xl mx-auto">
-            Real-time skill alignment, sentiment analytics, and AI-powered insight bridging students, faculty mentors, and placement committees.
+            Real-time skill alignment, sentiment analytics, and AI-powered insight bridging
+            students, faculty mentors, and placement committees.
           </p>
 
           <div className="mt-12 grid sm:grid-cols-2 gap-5 max-w-2xl mx-auto">
