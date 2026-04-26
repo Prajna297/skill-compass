@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { TrendingUp, Users, Target, AlertOctagon, Sparkles, ArrowUpRight } from "lucide-react";
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, BarChart, Bar, CartesianGrid, Legend } from "recharts";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/_faculty/dashboard")({
   head: () => ({
     meta: [
       { title: "Dashboard — SkillAlign" },

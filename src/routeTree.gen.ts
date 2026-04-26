@@ -9,154 +9,163 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as SetupRouteImport } from './routes/setup'
-import { Route as SentimentRouteImport } from './routes/sentiment'
-import { Route as JdTrackerRouteImport } from './routes/jd-tracker'
-import { Route as AlertsRouteImport } from './routes/alerts'
-import { Route as ActivityRouteImport } from './routes/activity'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as FacultyIndexRouteImport } from './routes/_faculty.index'
+import { Route as FacultySetupRouteImport } from './routes/_faculty.setup'
+import { Route as FacultySentimentRouteImport } from './routes/_faculty.sentiment'
+import { Route as FacultyJdTrackerRouteImport } from './routes/_faculty.jd-tracker'
+import { Route as FacultyAlertsRouteImport } from './routes/_faculty.alerts'
+import { Route as FacultyActivityRouteImport } from './routes/_faculty.activity'
 
-const SetupRoute = SetupRouteImport.update({
-  id: '/setup',
+const FacultyIndexRoute = FacultyIndexRouteImport.update({
+  id: '/_faculty/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FacultySetupRoute = FacultySetupRouteImport.update({
+  id: '/_faculty/setup',
   path: '/setup',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SentimentRoute = SentimentRouteImport.update({
-  id: '/sentiment',
+const FacultySentimentRoute = FacultySentimentRouteImport.update({
+  id: '/_faculty/sentiment',
   path: '/sentiment',
   getParentRoute: () => rootRouteImport,
 } as any)
-const JdTrackerRoute = JdTrackerRouteImport.update({
-  id: '/jd-tracker',
+const FacultyJdTrackerRoute = FacultyJdTrackerRouteImport.update({
+  id: '/_faculty/jd-tracker',
   path: '/jd-tracker',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AlertsRoute = AlertsRouteImport.update({
-  id: '/alerts',
+const FacultyAlertsRoute = FacultyAlertsRouteImport.update({
+  id: '/_faculty/alerts',
   path: '/alerts',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ActivityRoute = ActivityRouteImport.update({
-  id: '/activity',
+const FacultyActivityRoute = FacultyActivityRouteImport.update({
+  id: '/_faculty/activity',
   path: '/activity',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/activity': typeof ActivityRoute
-  '/alerts': typeof AlertsRoute
-  '/jd-tracker': typeof JdTrackerRoute
-  '/sentiment': typeof SentimentRoute
-  '/setup': typeof SetupRoute
+  '/activity': typeof FacultyActivityRoute
+  '/alerts': typeof FacultyAlertsRoute
+  '/jd-tracker': typeof FacultyJdTrackerRoute
+  '/sentiment': typeof FacultySentimentRoute
+  '/setup': typeof FacultySetupRoute
+  '/': typeof FacultyIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/activity': typeof ActivityRoute
-  '/alerts': typeof AlertsRoute
-  '/jd-tracker': typeof JdTrackerRoute
-  '/sentiment': typeof SentimentRoute
-  '/setup': typeof SetupRoute
+  '/activity': typeof FacultyActivityRoute
+  '/alerts': typeof FacultyAlertsRoute
+  '/jd-tracker': typeof FacultyJdTrackerRoute
+  '/sentiment': typeof FacultySentimentRoute
+  '/setup': typeof FacultySetupRoute
+  '/': typeof FacultyIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/activity': typeof ActivityRoute
-  '/alerts': typeof AlertsRoute
-  '/jd-tracker': typeof JdTrackerRoute
-  '/sentiment': typeof SentimentRoute
-  '/setup': typeof SetupRoute
+  '/_faculty/activity': typeof FacultyActivityRoute
+  '/_faculty/alerts': typeof FacultyAlertsRoute
+  '/_faculty/jd-tracker': typeof FacultyJdTrackerRoute
+  '/_faculty/sentiment': typeof FacultySentimentRoute
+  '/_faculty/setup': typeof FacultySetupRoute
+  '/_faculty/': typeof FacultyIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
     | '/activity'
     | '/alerts'
     | '/jd-tracker'
     | '/sentiment'
     | '/setup'
+    | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/activity' | '/alerts' | '/jd-tracker' | '/sentiment' | '/setup'
+  to: '/activity' | '/alerts' | '/jd-tracker' | '/sentiment' | '/setup' | '/'
   id:
     | '__root__'
-    | '/'
-    | '/activity'
-    | '/alerts'
-    | '/jd-tracker'
-    | '/sentiment'
-    | '/setup'
+    | '/_faculty/activity'
+    | '/_faculty/alerts'
+    | '/_faculty/jd-tracker'
+    | '/_faculty/sentiment'
+    | '/_faculty/setup'
+    | '/_faculty/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  ActivityRoute: typeof ActivityRoute
-  AlertsRoute: typeof AlertsRoute
-  JdTrackerRoute: typeof JdTrackerRoute
-  SentimentRoute: typeof SentimentRoute
-  SetupRoute: typeof SetupRoute
+  FacultyActivityRoute: typeof FacultyActivityRoute
+  FacultyAlertsRoute: typeof FacultyAlertsRoute
+  FacultyJdTrackerRoute: typeof FacultyJdTrackerRoute
+  FacultySentimentRoute: typeof FacultySentimentRoute
+  FacultySetupRoute: typeof FacultySetupRoute
+  FacultyIndexRoute: typeof FacultyIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/setup': {
-      id: '/setup'
-      path: '/setup'
-      fullPath: '/setup'
-      preLoaderRoute: typeof SetupRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sentiment': {
-      id: '/sentiment'
-      path: '/sentiment'
-      fullPath: '/sentiment'
-      preLoaderRoute: typeof SentimentRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/jd-tracker': {
-      id: '/jd-tracker'
-      path: '/jd-tracker'
-      fullPath: '/jd-tracker'
-      preLoaderRoute: typeof JdTrackerRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/alerts': {
-      id: '/alerts'
-      path: '/alerts'
-      fullPath: '/alerts'
-      preLoaderRoute: typeof AlertsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/activity': {
-      id: '/activity'
-      path: '/activity'
-      fullPath: '/activity'
-      preLoaderRoute: typeof ActivityRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/': {
-      id: '/'
+    '/_faculty/': {
+      id: '/_faculty/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+      preLoaderRoute: typeof FacultyIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_faculty/setup': {
+      id: '/_faculty/setup'
+      path: '/setup'
+      fullPath: '/setup'
+      preLoaderRoute: typeof FacultySetupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_faculty/sentiment': {
+      id: '/_faculty/sentiment'
+      path: '/sentiment'
+      fullPath: '/sentiment'
+      preLoaderRoute: typeof FacultySentimentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_faculty/jd-tracker': {
+      id: '/_faculty/jd-tracker'
+      path: '/jd-tracker'
+      fullPath: '/jd-tracker'
+      preLoaderRoute: typeof FacultyJdTrackerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_faculty/alerts': {
+      id: '/_faculty/alerts'
+      path: '/alerts'
+      fullPath: '/alerts'
+      preLoaderRoute: typeof FacultyAlertsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_faculty/activity': {
+      id: '/_faculty/activity'
+      path: '/activity'
+      fullPath: '/activity'
+      preLoaderRoute: typeof FacultyActivityRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  ActivityRoute: ActivityRoute,
-  AlertsRoute: AlertsRoute,
-  JdTrackerRoute: JdTrackerRoute,
-  SentimentRoute: SentimentRoute,
-  SetupRoute: SetupRoute,
+  FacultyActivityRoute: FacultyActivityRoute,
+  FacultyAlertsRoute: FacultyAlertsRoute,
+  FacultyJdTrackerRoute: FacultyJdTrackerRoute,
+  FacultySentimentRoute: FacultySentimentRoute,
+  FacultySetupRoute: FacultySetupRoute,
+  FacultyIndexRoute: FacultyIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}

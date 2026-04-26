@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { AlertTriangle, Clock, TrendingDown, MessageSquare } from "lucide-react";
 
-export const Route = createFileRoute("/alerts")({
+export const Route = createFileRoute("/_faculty/alerts")({
   head: () => ({ meta: [{ title: "Alert Panel — SkillAlign" }] }),
   component: AlertPage,
 });

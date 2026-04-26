@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Mic, Cpu, Quote } from "lucide-react";
 
-export const Route = createFileRoute("/activity")({
+export const Route = createFileRoute("/_faculty/activity")({
   head: () => ({ meta: [{ title: "Activity Feed — SkillAlign" }] }),
   component: ActivityFeedPage,
 });
