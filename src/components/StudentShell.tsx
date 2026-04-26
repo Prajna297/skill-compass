@@ -1,26 +1,22 @@
-import { Link, useLocation } from "@tanstack/react-router";
-import { LayoutDashboard, FileText, Activity, LineChart, AlertTriangle, Settings, Sparkles, Bell, LogOut } from "lucide-react";
+import { Link, useLocation, useNavigate } from "@tanstack/react-router";
+import { Sparkles, FileUp, NotebookPen, MessageSquare, LogOut } from "lucide-react";
+import { ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/auth/AuthProvider";
-import { useNavigate } from "@tanstack/react-router";
-import { ReactNode } from "react";
 
 const navItems = [
-  { to: "/dashboard" as const, label: "Dashboard", icon: LayoutDashboard, exact: true },
-  { to: "/jd-tracker" as const, label: "JD Tracker", icon: FileText, exact: false },
-  { to: "/activity" as const, label: "Activity Feed", icon: Activity, exact: false },
-  { to: "/sentiment" as const, label: "Sentiment Analytics", icon: LineChart, exact: false },
-  { to: "/alerts" as const, label: "Alert Panel", icon: AlertTriangle, exact: false },
-  { to: "/setup" as const, label: "Collaborative Setup", icon: Settings, exact: false },
+  { to: "/student" as const, label: "My Internship", icon: FileUp, exact: true },
+  { to: "/student/logs" as const, label: "Daily Logs", icon: NotebookPen, exact: false },
+  { to: "/student/comments" as const, label: "Mentor Feedback", icon: MessageSquare, exact: false },
 ];
 
-export function AppShell({ children }: { children: ReactNode }) {
+export function StudentShell({ children }: { children: ReactNode }) {
   const location = useLocation();
   const { profile, signOut } = useAuth();
   const navigate = useNavigate();
 
-  const initials = (profile?.full_name || "FM").split(" ").map((s) => s[0]).slice(0, 2).join("").toUpperCase();
+  const initials = (profile?.full_name || "ST").split(" ").map((s) => s[0]).slice(0, 2).join("").toUpperCase();
 
   const handleLogout = async () => {
     await signOut();
@@ -37,7 +33,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             </div>
             <div>
               <div className="font-display font-bold text-sidebar-foreground leading-tight">SkillAlign</div>
-              <div className="text-[10px] text-muted-foreground tracking-widest uppercase">Faculty Console</div>
+              <div className="text-[10px] text-muted-foreground tracking-widest uppercase">Student Portal</div>
             </div>
           </div>
         </div>
@@ -75,17 +71,12 @@ export function AppShell({ children }: { children: ReactNode }) {
         <header className="h-16 border-b border-border bg-card/50 backdrop-blur flex items-center justify-between px-6">
           <div>
             <div className="text-xs text-muted-foreground">Internship Monitoring System</div>
-            <div className="text-sm font-medium">Faculty Mentor workspace</div>
+            <div className="text-sm font-medium">Welcome, {profile?.full_name || "Student"}</div>
           </div>
           <div className="flex items-center gap-3">
             <div className="text-xs text-muted-foreground hidden md:flex items-center gap-2 font-mono">
-              <span className="h-2 w-2 rounded-full bg-success animate-pulse" />
-              {profile?.email}
+              {profile?.roll_no || profile?.email}
             </div>
-            <Button variant="ghost" size="icon" className="relative">
-              <Bell className="h-4 w-4" />
-              <span className="absolute top-2 right-2 h-2 w-2 rounded-full bg-destructive" />
-            </Button>
             <div className="h-9 w-9 rounded-full gradient-primary flex items-center justify-center font-semibold text-sm text-primary-foreground">
               {initials}
             </div>
