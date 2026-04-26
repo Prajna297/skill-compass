@@ -1,5 +1,5 @@
 import { Link, useLocation } from "@tanstack/react-router";
-import { LayoutDashboard, FileText, Activity, LineChart, AlertTriangle, Settings, Sparkles, Bell, LogOut } from "lucide-react";
+import { LayoutDashboard, FileText, Activity, LineChart, AlertTriangle, Settings, Sparkles, Bell, LogOut, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/auth/AuthProvider";
@@ -8,6 +8,7 @@ import { ReactNode } from "react";
 
 const navItems = [
   { to: "/dashboard" as const, label: "Dashboard", icon: LayoutDashboard, exact: true },
+  { to: "/students" as const, label: "Students", icon: Users, exact: false },
   { to: "/jd-tracker" as const, label: "JD Tracker", icon: FileText, exact: false },
   { to: "/activity" as const, label: "Activity Feed", icon: Activity, exact: false },
   { to: "/sentiment" as const, label: "Sentiment Analytics", icon: LineChart, exact: false },

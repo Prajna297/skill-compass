@@ -14,6 +14,7 @@ import { Route as FacultyRouteImport } from './routes/_faculty'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LoginStudentRouteImport } from './routes/login.student'
 import { Route as LoginFacultyRouteImport } from './routes/login.faculty'
+import { Route as FacultyStudentsRouteImport } from './routes/_faculty.students'
 import { Route as FacultySetupRouteImport } from './routes/_faculty.setup'
 import { Route as FacultySentimentRouteImport } from './routes/_faculty.sentiment'
 import { Route as FacultyJdTrackerRouteImport } from './routes/_faculty.jd-tracker'
@@ -23,6 +24,7 @@ import { Route as FacultyActivityRouteImport } from './routes/_faculty.activity'
 import { Route as StudentStudentIndexRouteImport } from './routes/_student.student.index'
 import { Route as StudentStudentLogsRouteImport } from './routes/_student.student.logs'
 import { Route as StudentStudentCommentsRouteImport } from './routes/_student.student.comments'
+import { Route as FacultyStudentsIdRouteImport } from './routes/_faculty.students.$id'
 
 const StudentRoute = StudentRouteImport.update({
   id: '/_student',
@@ -46,6 +48,11 @@ const LoginFacultyRoute = LoginFacultyRouteImport.update({
   id: '/login/faculty',
   path: '/login/faculty',
   getParentRoute: () => rootRouteImport,
+} as any)
+const FacultyStudentsRoute = FacultyStudentsRouteImport.update({
+  id: '/students',
+  path: '/students',
+  getParentRoute: () => FacultyRoute,
 } as any)
 const FacultySetupRoute = FacultySetupRouteImport.update({
   id: '/setup',
@@ -92,6 +99,11 @@ const StudentStudentCommentsRoute = StudentStudentCommentsRouteImport.update({
   path: '/student/comments',
   getParentRoute: () => StudentRoute,
 } as any)
+const FacultyStudentsIdRoute = FacultyStudentsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => FacultyStudentsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -101,8 +113,10 @@ export interface FileRoutesByFullPath {
   '/jd-tracker': typeof FacultyJdTrackerRoute
   '/sentiment': typeof FacultySentimentRoute
   '/setup': typeof FacultySetupRoute
+  '/students': typeof FacultyStudentsRouteWithChildren
   '/login/faculty': typeof LoginFacultyRoute
   '/login/student': typeof LoginStudentRoute
+  '/students/$id': typeof FacultyStudentsIdRoute
   '/student/comments': typeof StudentStudentCommentsRoute
   '/student/logs': typeof StudentStudentLogsRoute
   '/student/': typeof StudentStudentIndexRoute
@@ -115,8 +129,10 @@ export interface FileRoutesByTo {
   '/jd-tracker': typeof FacultyJdTrackerRoute
   '/sentiment': typeof FacultySentimentRoute
   '/setup': typeof FacultySetupRoute
+  '/students': typeof FacultyStudentsRouteWithChildren
   '/login/faculty': typeof LoginFacultyRoute
   '/login/student': typeof LoginStudentRoute
+  '/students/$id': typeof FacultyStudentsIdRoute
   '/student/comments': typeof StudentStudentCommentsRoute
   '/student/logs': typeof StudentStudentLogsRoute
   '/student': typeof StudentStudentIndexRoute
@@ -132,8 +148,10 @@ export interface FileRoutesById {
   '/_faculty/jd-tracker': typeof FacultyJdTrackerRoute
   '/_faculty/sentiment': typeof FacultySentimentRoute
   '/_faculty/setup': typeof FacultySetupRoute
+  '/_faculty/students': typeof FacultyStudentsRouteWithChildren
   '/login/faculty': typeof LoginFacultyRoute
   '/login/student': typeof LoginStudentRoute
+  '/_faculty/students/$id': typeof FacultyStudentsIdRoute
   '/_student/student/comments': typeof StudentStudentCommentsRoute
   '/_student/student/logs': typeof StudentStudentLogsRoute
   '/_student/student/': typeof StudentStudentIndexRoute
@@ -148,8 +166,10 @@ export interface FileRouteTypes {
     | '/jd-tracker'
     | '/sentiment'
     | '/setup'
+    | '/students'
     | '/login/faculty'
     | '/login/student'
+    | '/students/$id'
     | '/student/comments'
     | '/student/logs'
     | '/student/'
@@ -162,8 +182,10 @@ export interface FileRouteTypes {
     | '/jd-tracker'
     | '/sentiment'
     | '/setup'
+    | '/students'
     | '/login/faculty'
     | '/login/student'
+    | '/students/$id'
     | '/student/comments'
     | '/student/logs'
     | '/student'
@@ -178,8 +200,10 @@ export interface FileRouteTypes {
     | '/_faculty/jd-tracker'
     | '/_faculty/sentiment'
     | '/_faculty/setup'
+    | '/_faculty/students'
     | '/login/faculty'
     | '/login/student'
+    | '/_faculty/students/$id'
     | '/_student/student/comments'
     | '/_student/student/logs'
     | '/_student/student/'
@@ -229,6 +253,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/login/faculty'
       preLoaderRoute: typeof LoginFacultyRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_faculty/students': {
+      id: '/_faculty/students'
+      path: '/students'
+      fullPath: '/students'
+      preLoaderRoute: typeof FacultyStudentsRouteImport
+      parentRoute: typeof FacultyRoute
     }
     '/_faculty/setup': {
       id: '/_faculty/setup'
@@ -293,8 +324,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StudentStudentCommentsRouteImport
       parentRoute: typeof StudentRoute
     }
+    '/_faculty/students/$id': {
+      id: '/_faculty/students/$id'
+      path: '/$id'
+      fullPath: '/students/$id'
+      preLoaderRoute: typeof FacultyStudentsIdRouteImport
+      parentRoute: typeof FacultyStudentsRoute
+    }
   }
 }
+
+interface FacultyStudentsRouteChildren {
+  FacultyStudentsIdRoute: typeof FacultyStudentsIdRoute
+}
+
+const FacultyStudentsRouteChildren: FacultyStudentsRouteChildren = {
+  FacultyStudentsIdRoute: FacultyStudentsIdRoute,
+}
+
+const FacultyStudentsRouteWithChildren = FacultyStudentsRoute._addFileChildren(
+  FacultyStudentsRouteChildren,
+)
 
 interface FacultyRouteChildren {
   FacultyActivityRoute: typeof FacultyActivityRoute
@@ -303,6 +353,7 @@ interface FacultyRouteChildren {
   FacultyJdTrackerRoute: typeof FacultyJdTrackerRoute
   FacultySentimentRoute: typeof FacultySentimentRoute
   FacultySetupRoute: typeof FacultySetupRoute
+  FacultyStudentsRoute: typeof FacultyStudentsRouteWithChildren
 }
 
 const FacultyRouteChildren: FacultyRouteChildren = {
@@ -312,6 +363,7 @@ const FacultyRouteChildren: FacultyRouteChildren = {
   FacultyJdTrackerRoute: FacultyJdTrackerRoute,
   FacultySentimentRoute: FacultySentimentRoute,
   FacultySetupRoute: FacultySetupRoute,
+  FacultyStudentsRoute: FacultyStudentsRouteWithChildren,
 }
 
 const FacultyRouteWithChildren =
