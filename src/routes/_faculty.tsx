@@ -4,7 +4,9 @@ import { AppShell } from "@/components/AppShell";
 
 export const Route = createFileRoute("/_faculty")({
   beforeLoad: async ({ location }) => {
-    const { data: { session } } = await supabase.auth.getSession();
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
     if (!session) {
       throw redirect({ to: "/login/faculty", search: { redirect: location.href } });
     }

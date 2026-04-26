@@ -36,7 +36,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       supabase.from("user_roles").select("role").eq("user_id", uid).maybeSingle(),
     ]);
     setProfile((p as Profile) ?? null);
-    setRole(((r?.role as AppRole) ?? null));
+    setRole((r?.role as AppRole) ?? null);
   };
 
   useEffect(() => {
