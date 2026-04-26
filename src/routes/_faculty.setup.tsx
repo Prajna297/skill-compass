@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Upload, FileDown, Plus, FileText } from "lucide-react";
 import { useState } from "react";
 
-export const Route = createFileRoute("/setup")({
+export const Route = createFileRoute("/_faculty/setup")({
   head: () => ({ meta: [{ title: "Collaborative Setup — SkillAlign" }] }),
   component: SetupPage,
 });

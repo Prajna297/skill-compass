@@ -3,7 +3,7 @@ import { students, weeklyTrend } from "@/data/mockData";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, Legend } from "recharts";
 
-export const Route = createFileRoute("/sentiment")({
+export const Route = createFileRoute("/_faculty/sentiment")({
   head: () => ({ meta: [{ title: "Sentiment Analytics — SkillAlign" }] }),
   component: SentimentPage,
 });

@@ -9,36 +9,29 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as SetupRouteImport } from './routes/setup'
-import { Route as SentimentRouteImport } from './routes/sentiment'
-import { Route as JdTrackerRouteImport } from './routes/jd-tracker'
-import { Route as AlertsRouteImport } from './routes/alerts'
-import { Route as ActivityRouteImport } from './routes/activity'
+import { Route as StudentRouteImport } from './routes/_student'
+import { Route as FacultyRouteImport } from './routes/_faculty'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LoginStudentRouteImport } from './routes/login.student'
+import { Route as LoginFacultyRouteImport } from './routes/login.faculty'
+import { Route as FacultyStudentsRouteImport } from './routes/_faculty.students'
+import { Route as FacultySetupRouteImport } from './routes/_faculty.setup'
+import { Route as FacultySentimentRouteImport } from './routes/_faculty.sentiment'
+import { Route as FacultyJdTrackerRouteImport } from './routes/_faculty.jd-tracker'
+import { Route as FacultyDashboardRouteImport } from './routes/_faculty.dashboard'
+import { Route as FacultyAlertsRouteImport } from './routes/_faculty.alerts'
+import { Route as FacultyActivityRouteImport } from './routes/_faculty.activity'
+import { Route as StudentStudentIndexRouteImport } from './routes/_student.student.index'
+import { Route as StudentStudentLogsRouteImport } from './routes/_student.student.logs'
+import { Route as StudentStudentCommentsRouteImport } from './routes/_student.student.comments'
+import { Route as FacultyStudentsIdRouteImport } from './routes/_faculty.students.$id'
 
-const SetupRoute = SetupRouteImport.update({
-  id: '/setup',
-  path: '/setup',
+const StudentRoute = StudentRouteImport.update({
+  id: '/_student',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SentimentRoute = SentimentRouteImport.update({
-  id: '/sentiment',
-  path: '/sentiment',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const JdTrackerRoute = JdTrackerRouteImport.update({
-  id: '/jd-tracker',
-  path: '/jd-tracker',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AlertsRoute = AlertsRouteImport.update({
-  id: '/alerts',
-  path: '/alerts',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ActivityRoute = ActivityRouteImport.update({
-  id: '/activity',
-  path: '/activity',
+const FacultyRoute = FacultyRouteImport.update({
+  id: '/_faculty',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -46,31 +39,122 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LoginStudentRoute = LoginStudentRouteImport.update({
+  id: '/login/student',
+  path: '/login/student',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginFacultyRoute = LoginFacultyRouteImport.update({
+  id: '/login/faculty',
+  path: '/login/faculty',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FacultyStudentsRoute = FacultyStudentsRouteImport.update({
+  id: '/students',
+  path: '/students',
+  getParentRoute: () => FacultyRoute,
+} as any)
+const FacultySetupRoute = FacultySetupRouteImport.update({
+  id: '/setup',
+  path: '/setup',
+  getParentRoute: () => FacultyRoute,
+} as any)
+const FacultySentimentRoute = FacultySentimentRouteImport.update({
+  id: '/sentiment',
+  path: '/sentiment',
+  getParentRoute: () => FacultyRoute,
+} as any)
+const FacultyJdTrackerRoute = FacultyJdTrackerRouteImport.update({
+  id: '/jd-tracker',
+  path: '/jd-tracker',
+  getParentRoute: () => FacultyRoute,
+} as any)
+const FacultyDashboardRoute = FacultyDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => FacultyRoute,
+} as any)
+const FacultyAlertsRoute = FacultyAlertsRouteImport.update({
+  id: '/alerts',
+  path: '/alerts',
+  getParentRoute: () => FacultyRoute,
+} as any)
+const FacultyActivityRoute = FacultyActivityRouteImport.update({
+  id: '/activity',
+  path: '/activity',
+  getParentRoute: () => FacultyRoute,
+} as any)
+const StudentStudentIndexRoute = StudentStudentIndexRouteImport.update({
+  id: '/student/',
+  path: '/student/',
+  getParentRoute: () => StudentRoute,
+} as any)
+const StudentStudentLogsRoute = StudentStudentLogsRouteImport.update({
+  id: '/student/logs',
+  path: '/student/logs',
+  getParentRoute: () => StudentRoute,
+} as any)
+const StudentStudentCommentsRoute = StudentStudentCommentsRouteImport.update({
+  id: '/student/comments',
+  path: '/student/comments',
+  getParentRoute: () => StudentRoute,
+} as any)
+const FacultyStudentsIdRoute = FacultyStudentsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => FacultyStudentsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/activity': typeof ActivityRoute
-  '/alerts': typeof AlertsRoute
-  '/jd-tracker': typeof JdTrackerRoute
-  '/sentiment': typeof SentimentRoute
-  '/setup': typeof SetupRoute
+  '/activity': typeof FacultyActivityRoute
+  '/alerts': typeof FacultyAlertsRoute
+  '/dashboard': typeof FacultyDashboardRoute
+  '/jd-tracker': typeof FacultyJdTrackerRoute
+  '/sentiment': typeof FacultySentimentRoute
+  '/setup': typeof FacultySetupRoute
+  '/students': typeof FacultyStudentsRouteWithChildren
+  '/login/faculty': typeof LoginFacultyRoute
+  '/login/student': typeof LoginStudentRoute
+  '/students/$id': typeof FacultyStudentsIdRoute
+  '/student/comments': typeof StudentStudentCommentsRoute
+  '/student/logs': typeof StudentStudentLogsRoute
+  '/student/': typeof StudentStudentIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/activity': typeof ActivityRoute
-  '/alerts': typeof AlertsRoute
-  '/jd-tracker': typeof JdTrackerRoute
-  '/sentiment': typeof SentimentRoute
-  '/setup': typeof SetupRoute
+  '/activity': typeof FacultyActivityRoute
+  '/alerts': typeof FacultyAlertsRoute
+  '/dashboard': typeof FacultyDashboardRoute
+  '/jd-tracker': typeof FacultyJdTrackerRoute
+  '/sentiment': typeof FacultySentimentRoute
+  '/setup': typeof FacultySetupRoute
+  '/students': typeof FacultyStudentsRouteWithChildren
+  '/login/faculty': typeof LoginFacultyRoute
+  '/login/student': typeof LoginStudentRoute
+  '/students/$id': typeof FacultyStudentsIdRoute
+  '/student/comments': typeof StudentStudentCommentsRoute
+  '/student/logs': typeof StudentStudentLogsRoute
+  '/student': typeof StudentStudentIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/activity': typeof ActivityRoute
-  '/alerts': typeof AlertsRoute
-  '/jd-tracker': typeof JdTrackerRoute
-  '/sentiment': typeof SentimentRoute
-  '/setup': typeof SetupRoute
+  '/_faculty': typeof FacultyRouteWithChildren
+  '/_student': typeof StudentRouteWithChildren
+  '/_faculty/activity': typeof FacultyActivityRoute
+  '/_faculty/alerts': typeof FacultyAlertsRoute
+  '/_faculty/dashboard': typeof FacultyDashboardRoute
+  '/_faculty/jd-tracker': typeof FacultyJdTrackerRoute
+  '/_faculty/sentiment': typeof FacultySentimentRoute
+  '/_faculty/setup': typeof FacultySetupRoute
+  '/_faculty/students': typeof FacultyStudentsRouteWithChildren
+  '/login/faculty': typeof LoginFacultyRoute
+  '/login/student': typeof LoginStudentRoute
+  '/_faculty/students/$id': typeof FacultyStudentsIdRoute
+  '/_student/student/comments': typeof StudentStudentCommentsRoute
+  '/_student/student/logs': typeof StudentStudentLogsRoute
+  '/_student/student/': typeof StudentStudentIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -78,65 +162,75 @@ export interface FileRouteTypes {
     | '/'
     | '/activity'
     | '/alerts'
+    | '/dashboard'
     | '/jd-tracker'
     | '/sentiment'
     | '/setup'
+    | '/students'
+    | '/login/faculty'
+    | '/login/student'
+    | '/students/$id'
+    | '/student/comments'
+    | '/student/logs'
+    | '/student/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/activity' | '/alerts' | '/jd-tracker' | '/sentiment' | '/setup'
-  id:
-    | '__root__'
+  to:
     | '/'
     | '/activity'
     | '/alerts'
+    | '/dashboard'
     | '/jd-tracker'
     | '/sentiment'
     | '/setup'
+    | '/students'
+    | '/login/faculty'
+    | '/login/student'
+    | '/students/$id'
+    | '/student/comments'
+    | '/student/logs'
+    | '/student'
+  id:
+    | '__root__'
+    | '/'
+    | '/_faculty'
+    | '/_student'
+    | '/_faculty/activity'
+    | '/_faculty/alerts'
+    | '/_faculty/dashboard'
+    | '/_faculty/jd-tracker'
+    | '/_faculty/sentiment'
+    | '/_faculty/setup'
+    | '/_faculty/students'
+    | '/login/faculty'
+    | '/login/student'
+    | '/_faculty/students/$id'
+    | '/_student/student/comments'
+    | '/_student/student/logs'
+    | '/_student/student/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ActivityRoute: typeof ActivityRoute
-  AlertsRoute: typeof AlertsRoute
-  JdTrackerRoute: typeof JdTrackerRoute
-  SentimentRoute: typeof SentimentRoute
-  SetupRoute: typeof SetupRoute
+  FacultyRoute: typeof FacultyRouteWithChildren
+  StudentRoute: typeof StudentRouteWithChildren
+  LoginFacultyRoute: typeof LoginFacultyRoute
+  LoginStudentRoute: typeof LoginStudentRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/setup': {
-      id: '/setup'
-      path: '/setup'
-      fullPath: '/setup'
-      preLoaderRoute: typeof SetupRouteImport
+    '/_student': {
+      id: '/_student'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof StudentRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/sentiment': {
-      id: '/sentiment'
-      path: '/sentiment'
-      fullPath: '/sentiment'
-      preLoaderRoute: typeof SentimentRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/jd-tracker': {
-      id: '/jd-tracker'
-      path: '/jd-tracker'
-      fullPath: '/jd-tracker'
-      preLoaderRoute: typeof JdTrackerRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/alerts': {
-      id: '/alerts'
-      path: '/alerts'
-      fullPath: '/alerts'
-      preLoaderRoute: typeof AlertsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/activity': {
-      id: '/activity'
-      path: '/activity'
-      fullPath: '/activity'
-      preLoaderRoute: typeof ActivityRouteImport
+    '/_faculty': {
+      id: '/_faculty'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof FacultyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -146,26 +240,157 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/login/student': {
+      id: '/login/student'
+      path: '/login/student'
+      fullPath: '/login/student'
+      preLoaderRoute: typeof LoginStudentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login/faculty': {
+      id: '/login/faculty'
+      path: '/login/faculty'
+      fullPath: '/login/faculty'
+      preLoaderRoute: typeof LoginFacultyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_faculty/students': {
+      id: '/_faculty/students'
+      path: '/students'
+      fullPath: '/students'
+      preLoaderRoute: typeof FacultyStudentsRouteImport
+      parentRoute: typeof FacultyRoute
+    }
+    '/_faculty/setup': {
+      id: '/_faculty/setup'
+      path: '/setup'
+      fullPath: '/setup'
+      preLoaderRoute: typeof FacultySetupRouteImport
+      parentRoute: typeof FacultyRoute
+    }
+    '/_faculty/sentiment': {
+      id: '/_faculty/sentiment'
+      path: '/sentiment'
+      fullPath: '/sentiment'
+      preLoaderRoute: typeof FacultySentimentRouteImport
+      parentRoute: typeof FacultyRoute
+    }
+    '/_faculty/jd-tracker': {
+      id: '/_faculty/jd-tracker'
+      path: '/jd-tracker'
+      fullPath: '/jd-tracker'
+      preLoaderRoute: typeof FacultyJdTrackerRouteImport
+      parentRoute: typeof FacultyRoute
+    }
+    '/_faculty/dashboard': {
+      id: '/_faculty/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof FacultyDashboardRouteImport
+      parentRoute: typeof FacultyRoute
+    }
+    '/_faculty/alerts': {
+      id: '/_faculty/alerts'
+      path: '/alerts'
+      fullPath: '/alerts'
+      preLoaderRoute: typeof FacultyAlertsRouteImport
+      parentRoute: typeof FacultyRoute
+    }
+    '/_faculty/activity': {
+      id: '/_faculty/activity'
+      path: '/activity'
+      fullPath: '/activity'
+      preLoaderRoute: typeof FacultyActivityRouteImport
+      parentRoute: typeof FacultyRoute
+    }
+    '/_student/student/': {
+      id: '/_student/student/'
+      path: '/student'
+      fullPath: '/student/'
+      preLoaderRoute: typeof StudentStudentIndexRouteImport
+      parentRoute: typeof StudentRoute
+    }
+    '/_student/student/logs': {
+      id: '/_student/student/logs'
+      path: '/student/logs'
+      fullPath: '/student/logs'
+      preLoaderRoute: typeof StudentStudentLogsRouteImport
+      parentRoute: typeof StudentRoute
+    }
+    '/_student/student/comments': {
+      id: '/_student/student/comments'
+      path: '/student/comments'
+      fullPath: '/student/comments'
+      preLoaderRoute: typeof StudentStudentCommentsRouteImport
+      parentRoute: typeof StudentRoute
+    }
+    '/_faculty/students/$id': {
+      id: '/_faculty/students/$id'
+      path: '/$id'
+      fullPath: '/students/$id'
+      preLoaderRoute: typeof FacultyStudentsIdRouteImport
+      parentRoute: typeof FacultyStudentsRoute
+    }
   }
 }
 
+interface FacultyStudentsRouteChildren {
+  FacultyStudentsIdRoute: typeof FacultyStudentsIdRoute
+}
+
+const FacultyStudentsRouteChildren: FacultyStudentsRouteChildren = {
+  FacultyStudentsIdRoute: FacultyStudentsIdRoute,
+}
+
+const FacultyStudentsRouteWithChildren = FacultyStudentsRoute._addFileChildren(
+  FacultyStudentsRouteChildren,
+)
+
+interface FacultyRouteChildren {
+  FacultyActivityRoute: typeof FacultyActivityRoute
+  FacultyAlertsRoute: typeof FacultyAlertsRoute
+  FacultyDashboardRoute: typeof FacultyDashboardRoute
+  FacultyJdTrackerRoute: typeof FacultyJdTrackerRoute
+  FacultySentimentRoute: typeof FacultySentimentRoute
+  FacultySetupRoute: typeof FacultySetupRoute
+  FacultyStudentsRoute: typeof FacultyStudentsRouteWithChildren
+}
+
+const FacultyRouteChildren: FacultyRouteChildren = {
+  FacultyActivityRoute: FacultyActivityRoute,
+  FacultyAlertsRoute: FacultyAlertsRoute,
+  FacultyDashboardRoute: FacultyDashboardRoute,
+  FacultyJdTrackerRoute: FacultyJdTrackerRoute,
+  FacultySentimentRoute: FacultySentimentRoute,
+  FacultySetupRoute: FacultySetupRoute,
+  FacultyStudentsRoute: FacultyStudentsRouteWithChildren,
+}
+
+const FacultyRouteWithChildren =
+  FacultyRoute._addFileChildren(FacultyRouteChildren)
+
+interface StudentRouteChildren {
+  StudentStudentCommentsRoute: typeof StudentStudentCommentsRoute
+  StudentStudentLogsRoute: typeof StudentStudentLogsRoute
+  StudentStudentIndexRoute: typeof StudentStudentIndexRoute
+}
+
+const StudentRouteChildren: StudentRouteChildren = {
+  StudentStudentCommentsRoute: StudentStudentCommentsRoute,
+  StudentStudentLogsRoute: StudentStudentLogsRoute,
+  StudentStudentIndexRoute: StudentStudentIndexRoute,
+}
+
+const StudentRouteWithChildren =
+  StudentRoute._addFileChildren(StudentRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ActivityRoute: ActivityRoute,
-  AlertsRoute: AlertsRoute,
-  JdTrackerRoute: JdTrackerRoute,
-  SentimentRoute: SentimentRoute,
-  SetupRoute: SetupRoute,
+  FacultyRoute: FacultyRouteWithChildren,
+  StudentRoute: StudentRouteWithChildren,
+  LoginFacultyRoute: LoginFacultyRoute,
+  LoginStudentRoute: LoginStudentRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}

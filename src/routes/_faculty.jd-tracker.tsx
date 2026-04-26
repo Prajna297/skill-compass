@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Check, X } from "lucide-react";
 
-export const Route = createFileRoute("/jd-tracker")({
+export const Route = createFileRoute("/_faculty/jd-tracker")({
   head: () => ({ meta: [{ title: "JD Tracker — SkillAlign" }] }),
   component: JDTracker,
 });
