@@ -32,7 +32,11 @@ export const Route = createRootRoute({
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "SkillAlign — AI-Driven Internship Monitoring" },
-      { name: "description", content: "Real-time skill alignment, sentiment analytics, and AI-powered oversight for student internships." },
+      {
+        name: "description",
+        content:
+          "Real-time skill alignment, sentiment analytics, and AI-powered oversight for student internships.",
+      },
     ],
     links: [{ rel: "stylesheet", href: appCss }],
   }),

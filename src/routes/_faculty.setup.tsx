@@ -13,7 +13,16 @@ export const Route = createFileRoute("/_faculty/setup")({
 });
 
 function SetupPage() {
-  const [keywords, setKeywords] = useState<string[]>(["SQL", "Python", "AWS", "React", "Power BI", "Docker", "TensorFlow", "Spring Boot"]);
+  const [keywords, setKeywords] = useState<string[]>([
+    "SQL",
+    "Python",
+    "AWS",
+    "React",
+    "Power BI",
+    "Docker",
+    "TensorFlow",
+    "Spring Boot",
+  ]);
   const [newKeyword, setNewKeyword] = useState("");
 
   return (
@@ -21,11 +30,17 @@ function SetupPage() {
       <div className="flex items-end justify-between flex-wrap gap-4">
         <div>
           <h1 className="text-2xl font-display font-bold">Collaborative Setup</h1>
-          <p className="text-sm text-muted-foreground mt-1">Configure JD repository, keyword registries, and reporting exports for NAAC compliance.</p>
+          <p className="text-sm text-muted-foreground mt-1">
+            Configure JD repository, keyword registries, and reporting exports for NAAC compliance.
+          </p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline"><FileDown className="h-4 w-4 mr-2" /> Export CSV</Button>
-          <Button className="gradient-primary text-primary-foreground"><FileDown className="h-4 w-4 mr-2" /> Export PDF (NAAC)</Button>
+          <Button variant="outline">
+            <FileDown className="h-4 w-4 mr-2" /> Export CSV
+          </Button>
+          <Button className="gradient-primary text-primary-foreground">
+            <FileDown className="h-4 w-4 mr-2" /> Export PDF (NAAC)
+          </Button>
         </div>
       </div>
 
@@ -41,8 +56,13 @@ function SetupPage() {
               <div className="text-xs text-muted-foreground mt-1">PDF, DOCX, TXT · max 5MB</div>
             </div>
             <div>
-              <label className="text-xs uppercase tracking-widest text-muted-foreground">Or paste raw JD</label>
-              <Textarea placeholder="Paste the job description here…" className="mt-2 min-h-32 font-mono text-xs" />
+              <label className="text-xs uppercase tracking-widest text-muted-foreground">
+                Or paste raw JD
+              </label>
+              <Textarea
+                placeholder="Paste the job description here…"
+                className="mt-2 min-h-32 font-mono text-xs"
+              />
             </div>
             <div className="flex gap-2">
               <Input placeholder="Company name" />
@@ -76,7 +96,9 @@ function SetupPage() {
                     setNewKeyword("");
                   }
                 }}
-              ><Plus className="h-4 w-4" /></Button>
+              >
+                <Plus className="h-4 w-4" />
+              </Button>
             </div>
             <div className="flex flex-wrap gap-2">
               {keywords.map((k) => (
@@ -109,13 +131,22 @@ function SetupPage() {
               { c: "Deloitte", r: "Business Analyst Intern", k: 4, d: "Apr 08" },
               { c: "Accenture", r: "ML Engineer Intern", k: 5, d: "Apr 05" },
             ].map((j) => (
-              <div key={j.c} className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted/40 transition-colors">
+              <div
+                key={j.c}
+                className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted/40 transition-colors"
+              >
                 <FileText className="h-4 w-4 text-primary" />
                 <div className="flex-1">
-                  <div className="text-sm font-medium">{j.c} — {j.r}</div>
-                  <div className="text-xs text-muted-foreground">{j.k} keywords · uploaded {j.d}</div>
+                  <div className="text-sm font-medium">
+                    {j.c} — {j.r}
+                  </div>
+                  <div className="text-xs text-muted-foreground">
+                    {j.k} keywords · uploaded {j.d}
+                  </div>
                 </div>
-                <Badge variant="outline" className="text-xs">Active</Badge>
+                <Badge variant="outline" className="text-xs">
+                  Active
+                </Badge>
               </div>
             ))}
           </div>

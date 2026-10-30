@@ -16,7 +16,12 @@ export function StudentShell({ children }: { children: ReactNode }) {
   const { profile, signOut } = useAuth();
   const navigate = useNavigate();
 
-  const initials = (profile?.full_name || "ST").split(" ").map((s) => s[0]).slice(0, 2).join("").toUpperCase();
+  const initials = (profile?.full_name || "ST")
+    .split(" ")
+    .map((s) => s[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
 
   const handleLogout = async () => {
     await signOut();
@@ -32,15 +37,21 @@ export function StudentShell({ children }: { children: ReactNode }) {
               <Sparkles className="h-4 w-4 text-primary-foreground" />
             </div>
             <div>
-              <div className="font-display font-bold text-sidebar-foreground leading-tight">SkillAlign</div>
-              <div className="text-[10px] text-muted-foreground tracking-widest uppercase">Student Portal</div>
+              <div className="font-display font-bold text-sidebar-foreground leading-tight">
+                SkillAlign
+              </div>
+              <div className="text-[10px] text-muted-foreground tracking-widest uppercase">
+                Student Portal
+              </div>
             </div>
           </div>
         </div>
 
         <nav className="flex-1 p-3 space-y-1">
           {navItems.map((item) => {
-            const active = item.exact ? location.pathname === item.to : location.pathname.startsWith(item.to);
+            const active = item.exact
+              ? location.pathname === item.to
+              : location.pathname.startsWith(item.to);
             const Icon = item.icon;
             return (
               <Link
@@ -50,7 +61,7 @@ export function StudentShell({ children }: { children: ReactNode }) {
                   "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all",
                   active
                     ? "bg-sidebar-accent text-sidebar-accent-foreground border-l-2 border-primary"
-                    : "text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
+                    : "text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground",
                 )}
               >
                 <Icon className="h-4 w-4" />
@@ -61,7 +72,12 @@ export function StudentShell({ children }: { children: ReactNode }) {
         </nav>
 
         <div className="p-3 border-t border-sidebar-border">
-          <Button variant="ghost" size="sm" onClick={handleLogout} className="w-full justify-start text-sidebar-foreground/70">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleLogout}
+            className="w-full justify-start text-sidebar-foreground/70"
+          >
             <LogOut className="h-4 w-4 mr-2" /> Sign out
           </Button>
         </div>

@@ -23,7 +23,9 @@ function AlertPage() {
             <AlertTriangle className="h-6 w-6 text-destructive" />
             Alert Panel
           </h1>
-          <p className="text-sm text-muted-foreground mt-1">High-priority interventions requiring mentor action.</p>
+          <p className="text-sm text-muted-foreground mt-1">
+            High-priority interventions requiring mentor action.
+          </p>
         </div>
         <div className="flex gap-2">
           <Badge className="bg-destructive/15 text-destructive border-destructive/30 border">
@@ -37,7 +39,9 @@ function AlertPage() {
           <CardContent className="p-5">
             <div className="flex items-center gap-2 mb-1">
               <TrendingDown className="h-4 w-4 text-destructive" />
-              <span className="text-xs uppercase tracking-widest text-destructive font-semibold">Low Sentiment</span>
+              <span className="text-xs uppercase tracking-widest text-destructive font-semibold">
+                Low Sentiment
+              </span>
             </div>
             <div className="font-display text-3xl font-bold">{lowSentiment.length}</div>
             <div className="text-xs text-muted-foreground mt-1">Students with score &lt; 2</div>
@@ -47,7 +51,9 @@ function AlertPage() {
           <CardContent className="p-5">
             <div className="flex items-center gap-2 mb-1">
               <Clock className="h-4 w-4 text-warning" />
-              <span className="text-xs uppercase tracking-widest text-warning font-semibold">Log Silence</span>
+              <span className="text-xs uppercase tracking-widest text-warning font-semibold">
+                Log Silence
+              </span>
             </div>
             <div className="font-display text-3xl font-bold">{silent.length}</div>
             <div className="text-xs text-muted-foreground mt-1">Inactive &gt; 3 days</div>
@@ -57,7 +63,9 @@ function AlertPage() {
           <CardContent className="p-5">
             <div className="flex items-center gap-2 mb-1">
               <AlertTriangle className="h-4 w-4 text-info" />
-              <span className="text-xs uppercase tracking-widest text-info font-semibold">Critical Total</span>
+              <span className="text-xs uppercase tracking-widest text-info font-semibold">
+                Critical Total
+              </span>
             </div>
             <div className="font-display text-3xl font-bold">{critical.length}</div>
             <div className="text-xs text-muted-foreground mt-1">Combined risk profile</div>
@@ -74,17 +82,30 @@ function AlertPage() {
           return (
             <Card key={s.id} className="border-destructive/40 card-elevated">
               <CardContent className="p-5 flex items-center gap-4">
-                <div className="h-12 w-12 rounded-lg flex items-center justify-center font-semibold shrink-0" style={{ background: s.avatarColor, color: "oklch(0.18 0.04 250)" }}>
-                  {s.name.split(" ").map((n) => n[0]).join("")}
+                <div
+                  className="h-12 w-12 rounded-lg flex items-center justify-center font-semibold shrink-0"
+                  style={{ background: s.avatarColor, color: "oklch(0.18 0.04 250)" }}
+                >
+                  {s.name
+                    .split(" ")
+                    .map((n) => n[0])
+                    .join("")}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
                     <span className="font-medium">{s.name}</span>
-                    <Badge variant="outline" className="text-xs">{s.company}</Badge>
+                    <Badge variant="outline" className="text-xs">
+                      {s.company}
+                    </Badge>
                   </div>
                   <div className="flex flex-wrap gap-1.5">
                     {reasons.map((r) => (
-                      <Badge key={r} className="bg-destructive/15 text-destructive border-destructive/30 border text-xs">{r}</Badge>
+                      <Badge
+                        key={r}
+                        className="bg-destructive/15 text-destructive border-destructive/30 border text-xs"
+                      >
+                        {r}
+                      </Badge>
                     ))}
                   </div>
                 </div>

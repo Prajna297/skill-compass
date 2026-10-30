@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/auth/AuthProvider";
@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Lock, Upload, FileText, Sparkles } from "lucide-react";
 import { toast } from "sonner";
+import { getErrorMessage } from "@/lib/errors";
 
 export const Route = createFileRoute("/_student/student/")({
   head: () => ({ meta: [{ title: "My Internship — SkillAlign" }] }),
@@ -30,6 +31,7 @@ interface Submission {
 
 function StudentHome() {
   const { user } = useAuth();
+  const userId = user?.id;
   const [loading, setLoading] = useState(true);
   const [submission, setSubmission] = useState<Submission | null>(null);
 
@@ -43,49 +45,60 @@ function StudentHome() {
   const [jdFile, setJdFile] = useState<File | null>(null);
   const [saving, setSaving] = useState(false);
 
-  const load = async () => {
-    if (!user) return;
+  const load = useCallback(async () => {
+    if (!userId) {
+      setSubmission(null);
+      setLoading(false);
+      return;
+    }
+
     const { data } = await supabase
       .from("internship_submissions")
       .select("*")
-      .eq("student_id", user.id)
+      .eq("student_id", userId)
       .maybeSingle();
     setSubmission((data as Submission) ?? null);
     setLoading(false);
-  };
+  }, [userId]);
 
   useEffect(() => {
     load();
-  }, [user?.id]);
+  }, [load]);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user) return;
+    if (!userId) return;
     setSaving(true);
     try {
       let jdPath: string | null = null;
       if (jdFile) {
         const ext = jdFile.name.split(".").pop();
-        const path = `${user.id}/jd-${Date.now()}.${ext}`;
+        const path = `${userId}/jd-${Date.now()}.${ext}`;
         const { error: upErr } = await supabase.storage.from("jd-files").upload(path, jdFile);
         if (upErr) throw upErr;
         jdPath = path;
       }
       const { error } = await supabase.from("internship_submissions").insert({
-        student_id: user.id,
+        student_id: userId,
         company: company.trim(),
         role_title: roleTitle.trim(),
         jd_text: jdText.trim() || null,
         jd_file_path: jdPath,
-        required_tech: requiredTech.split(",").map((s) => s.trim()).filter(Boolean),
+        required_tech: requiredTech
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean),
         work_summary: workSummary.trim(),
-        actual_tech: actualTech.split(",").map((s) => s.trim()).filter(Boolean),
+        actual_tech: actualTech
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean),
       });
       if (error) throw error;
       toast.success("Internship submitted — locked for editing");
       await load();
-    } catch (err: any) {
-      toast.error(err.message || "Submission failed");
+    } catch (err: unknown) {
+      toast.error(getErrorMessage(err, "Submission failed"));
     } finally {
       setSaving(false);
     }
@@ -109,7 +122,9 @@ function StudentHome() {
           </CardHeader>
           <CardContent className="space-y-5 text-sm">
             <div>
-              <div className="text-xs uppercase tracking-wide text-muted-foreground mb-1">Job Description</div>
+              <div className="text-xs uppercase tracking-wide text-muted-foreground mb-1">
+                Job Description
+              </div>
               <p className="whitespace-pre-wrap">{submission.jd_text || "—"}</p>
               {submission.jd_file_path && (
                 <div className="mt-2 text-xs text-muted-foreground inline-flex items-center gap-1">
@@ -118,19 +133,33 @@ function StudentHome() {
               )}
             </div>
             <div>
-              <div className="text-xs uppercase tracking-wide text-muted-foreground mb-2">Required Tech</div>
+              <div className="text-xs uppercase tracking-wide text-muted-foreground mb-2">
+                Required Tech
+              </div>
               <div className="flex flex-wrap gap-1.5">
-                {submission.required_tech.map((t) => (<Badge key={t} variant="outline">{t}</Badge>))}
+                {submission.required_tech.map((t) => (
+                  <Badge key={t} variant="outline">
+                    {t}
+                  </Badge>
+                ))}
               </div>
             </div>
             <div>
-              <div className="text-xs uppercase tracking-wide text-muted-foreground mb-2">Tech You Used</div>
+              <div className="text-xs uppercase tracking-wide text-muted-foreground mb-2">
+                Tech You Used
+              </div>
               <div className="flex flex-wrap gap-1.5">
-                {submission.actual_tech.map((t) => (<Badge key={t} className="bg-success/15 text-success hover:bg-success/20">{t}</Badge>))}
+                {submission.actual_tech.map((t) => (
+                  <Badge key={t} className="bg-success/15 text-success hover:bg-success/20">
+                    {t}
+                  </Badge>
+                ))}
               </div>
             </div>
             <div>
-              <div className="text-xs uppercase tracking-wide text-muted-foreground mb-1">Work Summary</div>
+              <div className="text-xs uppercase tracking-wide text-muted-foreground mb-1">
+                Work Summary
+              </div>
               <p className="whitespace-pre-wrap">{submission.work_summary}</p>
             </div>
           </CardContent>
@@ -140,9 +169,13 @@ function StudentHome() {
           <CardContent className="p-5 flex items-center justify-between">
             <div>
               <div className="font-medium">Keep adding daily logs</div>
-              <p className="text-sm text-muted-foreground">Your daily activity feeds the mentor dashboards in real time.</p>
+              <p className="text-sm text-muted-foreground">
+                Your daily activity feeds the mentor dashboards in real time.
+              </p>
             </div>
-            <Link to="/student/logs"><Button>Add a log</Button></Link>
+            <Link to="/student/logs">
+              <Button>Add a log</Button>
+            </Link>
           </CardContent>
         </Card>
       </div>
@@ -156,7 +189,8 @@ function StudentHome() {
           <Sparkles className="h-5 w-5 text-primary" /> Submit your Internship
         </h1>
         <p className="text-sm text-muted-foreground mt-1">
-          You can submit this <strong>only once</strong>. Make sure everything is accurate before saving.
+          You can submit this <strong>only once</strong>. Make sure everything is accurate before
+          saving.
         </p>
       </div>
 
@@ -166,37 +200,82 @@ function StudentHome() {
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="company">Company</Label>
-                <Input id="company" value={company} onChange={(e) => setCompany(e.target.value)} required maxLength={120} />
+                <Input
+                  id="company"
+                  value={company}
+                  onChange={(e) => setCompany(e.target.value)}
+                  required
+                  maxLength={120}
+                />
               </div>
               <div>
                 <Label htmlFor="role">Role / Title</Label>
-                <Input id="role" value={roleTitle} onChange={(e) => setRoleTitle(e.target.value)} required maxLength={120} />
+                <Input
+                  id="role"
+                  value={roleTitle}
+                  onChange={(e) => setRoleTitle(e.target.value)}
+                  required
+                  maxLength={120}
+                />
               </div>
             </div>
 
             <div>
               <Label htmlFor="jd">Job Description (paste text)</Label>
-              <Textarea id="jd" rows={5} value={jdText} onChange={(e) => setJdText(e.target.value)} maxLength={8000} />
+              <Textarea
+                id="jd"
+                rows={5}
+                value={jdText}
+                onChange={(e) => setJdText(e.target.value)}
+                maxLength={8000}
+              />
             </div>
 
             <div>
-              <Label htmlFor="jdfile" className="flex items-center gap-2"><Upload className="h-3.5 w-3.5" /> JD file (optional, PDF/DOC)</Label>
-              <Input id="jdfile" type="file" accept=".pdf,.doc,.docx,.txt" onChange={(e) => setJdFile(e.target.files?.[0] ?? null)} />
+              <Label htmlFor="jdfile" className="flex items-center gap-2">
+                <Upload className="h-3.5 w-3.5" /> JD file (optional, PDF/DOC)
+              </Label>
+              <Input
+                id="jdfile"
+                type="file"
+                accept=".pdf,.doc,.docx,.txt"
+                onChange={(e) => setJdFile(e.target.files?.[0] ?? null)}
+              />
             </div>
 
             <div>
               <Label htmlFor="req">Required Tech (comma-separated)</Label>
-              <Input id="req" placeholder="e.g. SQL, Python, Power BI" value={requiredTech} onChange={(e) => setRequiredTech(e.target.value)} required />
+              <Input
+                id="req"
+                placeholder="e.g. SQL, Python, Power BI"
+                value={requiredTech}
+                onChange={(e) => setRequiredTech(e.target.value)}
+                required
+              />
             </div>
 
             <div>
               <Label htmlFor="actual">Tech You Actually Used (comma-separated)</Label>
-              <Input id="actual" placeholder="e.g. SQL, Excel, Power BI" value={actualTech} onChange={(e) => setActualTech(e.target.value)} required />
+              <Input
+                id="actual"
+                placeholder="e.g. SQL, Excel, Power BI"
+                value={actualTech}
+                onChange={(e) => setActualTech(e.target.value)}
+                required
+              />
             </div>
 
             <div>
               <Label htmlFor="work">Work Summary</Label>
-              <Textarea id="work" rows={5} value={workSummary} onChange={(e) => setWorkSummary(e.target.value)} required maxLength={5000} placeholder="Describe what you did during the internship..." />
+              <Textarea
+                id="work"
+                rows={5}
+                value={workSummary}
+                onChange={(e) => setWorkSummary(e.target.value)}
+                required
+                maxLength={5000}
+                placeholder="Describe what you did during the internship..."
+              />
             </div>
 
             <Button type="submit" disabled={saving} className="w-full">

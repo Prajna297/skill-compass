@@ -136,23 +136,34 @@
     background-attachment: fixed;
   }
 
-  h1, h2, h3, h4 {
+  h1,
+  h2,
+  h3,
+  h4 {
     font-family: var(--font-display);
     letter-spacing: -0.02em;
   }
 }
 
 @layer utilities {
-  .font-display { font-family: var(--font-display); }
-  .font-mono { font-family: var(--font-mono); }
-  .gradient-primary { background: var(--gradient-primary); }
+  .font-display {
+    font-family: var(--font-display);
+  }
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
   .gradient-text {
     background: var(--gradient-primary);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
-  .glow { box-shadow: var(--shadow-glow); }
+  .glow {
+    box-shadow: var(--shadow-glow);
+  }
   .card-elevated {
     background: var(--gradient-surface);
     box-shadow: var(--shadow-card);

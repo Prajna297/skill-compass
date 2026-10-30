@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { GraduationCap, Sparkles } from "lucide-react";
 import { toast } from "sonner";
+import { getErrorMessage } from "@/lib/errors";
 
 export const Route = createFileRoute("/login/student")({
   head: () => ({ meta: [{ title: "Student Login — SkillAlign" }] }),
@@ -42,8 +43,8 @@ function StudentLogin() {
         if (error) throw error;
       }
       navigate({ to: "/student" });
-    } catch (err: any) {
-      toast.error(err.message || "Authentication failed");
+    } catch (err: unknown) {
+      toast.error(getErrorMessage(err, "Authentication failed"));
     } finally {
       setLoading(false);
     }
@@ -52,7 +53,10 @@ function StudentLogin() {
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-6">
       <div className="w-full max-w-md">
-        <Link to="/" className="flex items-center gap-2 mb-8 text-sm text-muted-foreground hover:text-foreground">
+        <Link
+          to="/"
+          className="flex items-center gap-2 mb-8 text-sm text-muted-foreground hover:text-foreground"
+        >
           <Sparkles className="h-4 w-4" /> SkillAlign
         </Link>
         <Card className="card-elevated p-8 border-border/60">
@@ -61,8 +65,12 @@ function StudentLogin() {
               <GraduationCap className="h-5 w-5" />
             </div>
             <div>
-              <h1 className="font-display font-semibold text-xl">Student {mode === "signin" ? "Sign in" : "Sign up"}</h1>
-              <p className="text-xs text-muted-foreground">Submit your internship details and daily logs</p>
+              <h1 className="font-display font-semibold text-xl">
+                Student {mode === "signin" ? "Sign in" : "Sign up"}
+              </h1>
+              <p className="text-xs text-muted-foreground">
+                Submit your internship details and daily logs
+              </p>
             </div>
           </div>
 
@@ -71,21 +79,46 @@ function StudentLogin() {
               <>
                 <div>
                   <Label htmlFor="name">Full name</Label>
-                  <Input id="name" value={fullName} onChange={(e) => setFullName(e.target.value)} required maxLength={120} />
+                  <Input
+                    id="name"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    required
+                    maxLength={120}
+                  />
                 </div>
                 <div>
                   <Label htmlFor="roll">Roll number</Label>
-                  <Input id="roll" value={rollNo} onChange={(e) => setRollNo(e.target.value)} required maxLength={40} />
+                  <Input
+                    id="roll"
+                    value={rollNo}
+                    onChange={(e) => setRollNo(e.target.value)}
+                    required
+                    maxLength={40}
+                  />
                 </div>
               </>
             )}
             <div>
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+              <Input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
             </div>
             <div>
               <Label htmlFor="password">Password</Label>
-              <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={6} />
+              <Input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                minLength={6}
+              />
             </div>
             <Button type="submit" disabled={loading} className="w-full">
               {loading ? "Please wait..." : mode === "signin" ? "Sign in" : "Create account"}
@@ -94,13 +127,34 @@ function StudentLogin() {
 
           <div className="mt-5 text-center text-sm text-muted-foreground">
             {mode === "signin" ? (
-              <>No account? <button type="button" className="text-primary hover:underline" onClick={() => setMode("signup")}>Sign up</button></>
+              <>
+                No account?{" "}
+                <button
+                  type="button"
+                  className="text-primary hover:underline"
+                  onClick={() => setMode("signup")}
+                >
+                  Sign up
+                </button>
+              </>
             ) : (
-              <>Already registered? <button type="button" className="text-primary hover:underline" onClick={() => setMode("signin")}>Sign in</button></>
+              <>
+                Already registered?{" "}
+                <button
+                  type="button"
+                  className="text-primary hover:underline"
+                  onClick={() => setMode("signin")}
+                >
+                  Sign in
+                </button>
+              </>
             )}
           </div>
           <div className="mt-3 text-center text-xs text-muted-foreground">
-            Faculty? <Link to="/login/faculty" className="text-primary hover:underline">Use the faculty login</Link>
+            Faculty?{" "}
+            <Link to="/login/faculty" className="text-primary hover:underline">
+              Use the faculty login
+            </Link>
           </div>
         </Card>
       </div>
